@@ -130,6 +130,7 @@ public class PlayerMovement : MonoBehaviour
 			//We are holding something, so drop it where we are.
 			pickup.transform.parent = null;
 			pickup.transform.position = new Vector3(myTrans.position.x, myTrans.position.y, myTrans.position.z);
+			pickup.GetComponent<Collider>().enabled = true;
 			isHoldingPickup = false;
 			return;
 		}
@@ -141,6 +142,7 @@ public class PlayerMovement : MonoBehaviour
 		//We are able to pick something up, so snag it
 		pickupTrans.parent = this.transform;
 		pickupTrans.position = new Vector3(myTrans.position.x, myTrans.position.y + 0.5f, myTrans.position.z);
+		pickup.GetComponent<Collider>().enabled = false;
 		isHoldingPickup = true;
 	}
 
@@ -246,10 +248,12 @@ public class PlayerMovement : MonoBehaviour
 	void DisableInteraction()
 	{
 		canInteract = false;
+		canMovePlayer = false;
 	}
 
 	void EnableInteraction()
 	{
 		canInteract = true;
+		canMovePlayer = true;
 	}
 }

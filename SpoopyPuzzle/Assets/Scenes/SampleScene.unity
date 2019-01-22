@@ -976,19 +976,22 @@ MonoBehaviour:
       width: 75
       height: 75
     responses:
-    - Hi!
-    - Eat ass.
-    responsesRect:
-    - serializedVersion: 2
-      x: -50
-      y: 0
-      width: 100
-      height: 50
-    - serializedVersion: 2
-      x: 50
-      y: 0
-      width: 100
-      height: 50
+    - response: Hi!
+      responseRect:
+        serializedVersion: 2
+        x: -50
+        y: 0
+        width: 100
+        height: 50
+      eventCall: 
+    - response: Eat ass.
+      responseRect:
+        serializedVersion: 2
+        x: 50
+        y: 0
+        width: 100
+        height: 50
+      eventCall: 
     connections: 0100000002000000
   - prompt: How nice! Enjoy your day!
     promptRect:
@@ -997,14 +1000,7 @@ MonoBehaviour:
       y: -80
       width: 75
       height: 75
-    responses:
-    - Thank you!
-    responsesRect:
-    - serializedVersion: 2
-      x: 0
-      y: 0
-      width: 100
-      height: 50
+    responses: []
     connections: ffffffff
   - prompt: Wow. Dick.
     promptRect:
@@ -1014,8 +1010,7 @@ MonoBehaviour:
       width: 75
       height: 75
     responses: []
-    responsesRect: []
-    connections: 0a000000
+    connections: ffffffff
   currNode: 0
 --- !u!1 &1305526530
 GameObject:
@@ -1186,7 +1181,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 3
   gravity: 20
-  jumpSpeed: 8
+  jumpSpeed: 5
 --- !u!1 &1463075155
 GameObject:
   m_ObjectHideFlags: 0

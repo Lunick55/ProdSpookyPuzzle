@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
+//A windoe tool to visually set up dialogue trees
 public class nodeEditor : EditorWindow
 {
 	string tempString = "Hello World!";
