@@ -14,13 +14,14 @@ public class PlayerMovement : MonoBehaviour
 
     private bool canMovePlayer = true;
 	private bool canJump = false;
+	private bool canInteract = true;
+
     private Vector3 inputDir = Vector3.zero;
 
 	private GameObject pickup;
 	private bool isHoldingPickup = false;
 
 	private GameObject personTalkingTo;
-	private bool isTalking = false;
 
 	enum Interaction
 	{
@@ -40,6 +41,8 @@ public class PlayerMovement : MonoBehaviour
         EventManager.StartListening("RIGHT", HandleRight);
 		EventManager.StartListening("E_down", HandleInteraction);
 		EventManager.StartListening("SPACE", HandleSpace);
+		EventManager.StartListening("MENU_open", DisableInteraction);
+		EventManager.StartListening("MENU_close", EnableInteraction);
 
 		cc = GetComponent<CharacterController>();
 		myTrans = this.transform;
@@ -89,24 +92,27 @@ public class PlayerMovement : MonoBehaviour
         inputDir = Vector3.zero;
     }
 
-	
+
 	//Interaction Handler. Depending on current Interaction type execute specific functions
 	void HandleInteraction()
 	{
-		if (currInteract == Interaction.NONE)
-		{
-			Debug.Log("No Interaction");
-			return;
-		}
-		else if (currInteract == Interaction.PICKUP)
-		{
-			Debug.Log("Pickup Interaction");
-			PickupObject();
-		}
-		else if (currInteract == Interaction.TALK)
-		{
-			Debug.Log("Talk Interaction");
-			TalkToSomeone();
+		if (canInteract)
+		{ 
+			if (currInteract == Interaction.NONE)
+			{
+				Debug.Log("No Interaction");
+				return;
+			}
+			else if (currInteract == Interaction.PICKUP)
+			{
+				Debug.Log("Pickup Interaction");
+				PickupObject();
+			}
+			else if (currInteract == Interaction.TALK)
+			{
+				Debug.Log("Talk Interaction");
+				TalkToSomeone();
+			}
 		}
 	}
 
@@ -146,7 +152,7 @@ public class PlayerMovement : MonoBehaviour
 			return;
 		}
 
-		personTalkingTo.GetComponent<DialogueController>().enabled = true;
+		EventManager.FireEvent(personTalkingTo.name + "_enable");
 		//have a conversation somehow.
 		//keyboard should be disabled, but mouse is fine
 		//click on interactable bubbles
@@ -193,7 +199,7 @@ public class PlayerMovement : MonoBehaviour
 			Debug.Log("Bye friend!");
 
 			//remove this at some point, since moving while talking SHOULD be disabled
-			personTalkingTo.GetComponent<DialogueController>().enabled = false;
+			//personTalkingTo.GetComponent<DialogueController>().enabled = false;
 			personTalkingTo = null;
 			SetInteraction(Interaction.NONE);
 		}
@@ -235,5 +241,15 @@ public class PlayerMovement : MonoBehaviour
 		{
 			canJump = true;
 		}
+	}
+
+	void DisableInteraction()
+	{
+		canInteract = false;
+	}
+
+	void EnableInteraction()
+	{
+		canInteract = true;
 	}
 }
